@@ -83,7 +83,7 @@ public class OrderManagementApiExample {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://api.cielo.com.br/order-management/v1*
+All URIs are relative to *https://api.cielo.com.br/sandbox-lio/order-management/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -114,16 +114,16 @@ Class | Method | HTTP request | Description
 ## Documentation for Authorization
 
 Authentication schemes defined for the API:
-### client_id
+### access-token
 
 - **Type**: API key
-- **API key parameter name**: client_id
+- **API key parameter name**: access-token
 - **Location**: HTTP header
 
-### access_token
+### client-id
 
 - **Type**: API key
-- **API key parameter name**: access_token
+- **API key parameter name**: client-id
 - **Location**: HTTP header
 
 ### merchant-id
@@ -135,7 +135,7 @@ Authentication schemes defined for the API:
 
 ## Recommendation
 
-It's recommended to create an instance of `ApiClient` per thread in a multithreaded environment to avoid any potential issue.
+It's recommended to create an instance of `ApiClient` per thread in a multithreaded environment to avoid any potential issues.
 
 ## Author
 

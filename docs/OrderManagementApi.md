@@ -1,6 +1,6 @@
 # OrderManagementApi
 
-All URIs are relative to *https://api.cielo.com.br/order-management/v1*
+All URIs are relative to *https://api.cielo.com.br/sandbox-lio/order-management/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -60,7 +60,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[merchant-id](../README.md#merchant-id), [access-token](../README.md#access-token), [client-id](../README.md#client-id)
 
 ### HTTP request headers
 
@@ -109,7 +109,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[merchant-id](../README.md#merchant-id), [access-token](../README.md#access-token), [client-id](../README.md#client-id)
 
 ### HTTP request headers
 
@@ -157,7 +157,7 @@ null (empty response body)
 
 ### Authorization
 
-No authorization required
+[merchant-id](../README.md#merchant-id), [access-token](../README.md#access-token), [client-id](../README.md#client-id)
 
 ### HTTP request headers
 
@@ -208,7 +208,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[merchant-id](../README.md#merchant-id), [access-token](../README.md#access-token), [client-id](../README.md#client-id)
 
 ### HTTP request headers
 
@@ -257,7 +257,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[merchant-id](../README.md#merchant-id), [access-token](../README.md#access-token), [client-id](../README.md#client-id)
 
 ### HTTP request headers
 
@@ -305,7 +305,7 @@ null (empty response body)
 
 ### Authorization
 
-No authorization required
+[merchant-id](../README.md#merchant-id), [access-token](../README.md#access-token), [client-id](../README.md#client-id)
 
 ### HTTP request headers
 
@@ -354,7 +354,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[merchant-id](../README.md#merchant-id), [access-token](../README.md#access-token), [client-id](../README.md#client-id)
 
 ### HTTP request headers
 
@@ -403,7 +403,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[merchant-id](../README.md#merchant-id), [access-token](../README.md#access-token), [client-id](../README.md#client-id)
 
 ### HTTP request headers
 
@@ -453,7 +453,7 @@ null (empty response body)
 
 ### Authorization
 
-No authorization required
+[merchant-id](../README.md#merchant-id), [access-token](../README.md#access-token), [client-id](../README.md#client-id)
 
 ### HTTP request headers
 
@@ -506,7 +506,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[merchant-id](../README.md#merchant-id), [access-token](../README.md#access-token), [client-id](../README.md#client-id)
 
 ### HTTP request headers
 
