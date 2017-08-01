@@ -23,11 +23,14 @@ import java.util.*;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
-import io.swagger.client.model.ErrorResponse;
-import io.swagger.client.model.Order;
-import io.swagger.client.model.OrderItem;
-import io.swagger.client.model.Response;
-import io.swagger.client.model.Transaction;
+import io.swagger.client.model.Body;
+import io.swagger.client.model.Body1;
+import io.swagger.client.model.Body2;
+import io.swagger.client.model.InlineResponse200;
+import io.swagger.client.model.InlineResponse201;
+import io.swagger.client.model.InlineResponse401;
+import io.swagger.client.model.OrdersItems;
+import io.swagger.client.model.OrdersTransactions;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -67,10 +70,96 @@ public class OrderManagementApi {
    * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.
    * @param id Identificador do pedido.
    * @param body 
-   * @return Response
+   * @return InlineResponse201
   */
-  public Response orderAddItem (String clientId, String accessToken, String merchantId, String id, OrderItem body) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
+  public InlineResponse201 orderAddItem (String clientId, String accessToken, String merchantId, String id, Body1 body) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
     Object postBody = body;
+    // verify the required parameter 'clientId' is set
+    if (clientId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderAddItem",
+        new ApiException(400, "Missing the required parameter 'clientId' when calling orderAddItem"));
+    }
+    // verify the required parameter 'accessToken' is set
+    if (accessToken == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderAddItem",
+        new ApiException(400, "Missing the required parameter 'accessToken' when calling orderAddItem"));
+    }
+    // verify the required parameter 'merchantId' is set
+    if (merchantId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderAddItem",
+        new ApiException(400, "Missing the required parameter 'merchantId' when calling orderAddItem"));
+    }
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderAddItem",
+        new ApiException(400, "Missing the required parameter 'id' when calling orderAddItem"));
+    }
+    // verify the required parameter 'body' is set
+    if (body == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'body' when calling orderAddItem",
+        new ApiException(400, "Missing the required parameter 'body' when calling orderAddItem"));
+    }
+
+    // create path and map variables
+    String path = "/orders/{id}/items".replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    // header params
+    Map<String, String> headerParams = new HashMap<String, String>();
+    // form params
+    Map<String, String> formParams = new HashMap<String, String>();
+    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
+    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
+    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
+    String[] contentTypes = {
+      "application/json"
+    };
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+
+    if (contentType.startsWith("multipart/form-data")) {
+      // file uploading
+      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
+      HttpEntity httpEntity = localVarBuilder.build();
+      postBody = httpEntity;
+    } else {
+      // normal form params
+    }
+
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
+
+    try {
+      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType, authNames);
+      if (localVarResponse != null) {
+         return (InlineResponse201) ApiInvoker.deserialize(localVarResponse, "", InlineResponse201.class);
+      } else {
+         return null;
+      }
+    } catch (ApiException ex) {
+       throw ex;
+    } catch (InterruptedException ex) {
+       throw ex;
+    } catch (ExecutionException ex) {
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
+    } catch (TimeoutException ex) {
+      throw ex;
+    }
+  }
+
+      /**
+   * 
+   * Recurso responsável por efetuar a inclusão de um novo item em um pedido.
+   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param id Identificador do pedido.   * @param body 
+  */
+  public void orderAddItem (String clientId, String accessToken, String merchantId, String id, Body1 body, final Response.Listener<InlineResponse201> responseListener, final Response.ErrorListener errorListener) {
+    Object postBody = body;
+
     // verify the required parameter 'clientId' is set
     if (clientId == null) {
       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderAddItem",
@@ -106,98 +195,6 @@ public class OrderManagementApi {
     Map<String, String> headerParams = new HashMap<String, String>();
     // form params
     Map<String, String> formParams = new HashMap<String, String>();
-    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
-    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
-    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
-    String[] contentTypes = {
-      "application/json"
-    };
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    if (contentType.startsWith("multipart/form-data")) {
-      // file uploading
-      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
-      HttpEntity httpEntity = localVarBuilder.build();
-      postBody = httpEntity;
-    } else {
-      // normal form params
-    }
-
-    String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
-
-    try {
-      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType, authNames);
-      if (localVarResponse != null) {
-         return (Response) ApiInvoker.deserialize(localVarResponse, "", Response.class);
-      } else {
-         return null;
-      }
-    } catch (ApiException ex) {
-       throw ex;
-    } catch (InterruptedException ex) {
-       throw ex;
-    } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
-    } catch (TimeoutException ex) {
-       throw ex;
-    }
-  }
-
-      /**
-   * 
-   * Recurso responsável por efetuar a inclusão de um novo item em um pedido.
-   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param id Identificador do pedido.   * @param body 
-  */
-  public void orderAddItem (String clientId, String accessToken, String merchantId, String id, OrderItem body, final Response.Listener<Response> responseListener, final Response.ErrorListener errorListener) {
-    Object postBody = body;
-
-  
-    // verify the required parameter 'clientId' is set
-    if (clientId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderAddItem",
-         new ApiException(400, "Missing the required parameter 'clientId' when calling orderAddItem"));
-    }
-    
-    // verify the required parameter 'accessToken' is set
-    if (accessToken == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderAddItem",
-         new ApiException(400, "Missing the required parameter 'accessToken' when calling orderAddItem"));
-    }
-    
-    // verify the required parameter 'merchantId' is set
-    if (merchantId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderAddItem",
-         new ApiException(400, "Missing the required parameter 'merchantId' when calling orderAddItem"));
-    }
-    
-    // verify the required parameter 'id' is set
-    if (id == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderAddItem",
-         new ApiException(400, "Missing the required parameter 'id' when calling orderAddItem"));
-    }
-    
-    // verify the required parameter 'body' is set
-    if (body == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'body' when calling orderAddItem",
-         new ApiException(400, "Missing the required parameter 'body' when calling orderAddItem"));
-    }
-    
-
-    // create path and map variables
-    String path = "/orders/{id}/items".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
-
-    // query params
-    List<Pair> queryParams = new ArrayList<Pair>();
-    // header params
-    Map<String, String> headerParams = new HashMap<String, String>();
-    // form params
-    Map<String, String> formParams = new HashMap<String, String>();
 
 
     headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
@@ -220,7 +217,7 @@ public class OrderManagementApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -228,7 +225,7 @@ public class OrderManagementApi {
           @Override
           public void onResponse(String localVarResponse) {
             try {
-              responseListener.onResponse((Response) ApiInvoker.deserialize(localVarResponse,  "", Response.class));
+              responseListener.onResponse((InlineResponse201) ApiInvoker.deserialize(localVarResponse,  "", InlineResponse201.class));
             } catch (ApiException exception) {
                errorListener.onErrorResponse(new VolleyError(exception));
             }
@@ -250,10 +247,91 @@ public class OrderManagementApi {
    * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.
    * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.
    * @param body 
-   * @return Response
+   * @return InlineResponse201
   */
-  public Response orderCreate (String clientId, String accessToken, String merchantId, Order body) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
+  public InlineResponse201 orderCreate (String clientId, String accessToken, String merchantId, Body body) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
     Object postBody = body;
+    // verify the required parameter 'clientId' is set
+    if (clientId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderCreate",
+        new ApiException(400, "Missing the required parameter 'clientId' when calling orderCreate"));
+    }
+    // verify the required parameter 'accessToken' is set
+    if (accessToken == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderCreate",
+        new ApiException(400, "Missing the required parameter 'accessToken' when calling orderCreate"));
+    }
+    // verify the required parameter 'merchantId' is set
+    if (merchantId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderCreate",
+        new ApiException(400, "Missing the required parameter 'merchantId' when calling orderCreate"));
+    }
+    // verify the required parameter 'body' is set
+    if (body == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'body' when calling orderCreate",
+        new ApiException(400, "Missing the required parameter 'body' when calling orderCreate"));
+    }
+
+    // create path and map variables
+    String path = "/orders";
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    // header params
+    Map<String, String> headerParams = new HashMap<String, String>();
+    // form params
+    Map<String, String> formParams = new HashMap<String, String>();
+    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
+    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
+    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
+    String[] contentTypes = {
+      "application/json"
+    };
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+
+    if (contentType.startsWith("multipart/form-data")) {
+      // file uploading
+      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
+      HttpEntity httpEntity = localVarBuilder.build();
+      postBody = httpEntity;
+    } else {
+      // normal form params
+    }
+
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
+
+    try {
+      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType, authNames);
+      if (localVarResponse != null) {
+         return (InlineResponse201) ApiInvoker.deserialize(localVarResponse, "", InlineResponse201.class);
+      } else {
+         return null;
+      }
+    } catch (ApiException ex) {
+       throw ex;
+    } catch (InterruptedException ex) {
+       throw ex;
+    } catch (ExecutionException ex) {
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
+    } catch (TimeoutException ex) {
+      throw ex;
+    }
+  }
+
+      /**
+   * 
+   * Recurso responsável por efetuar a criação de um pedido.
+   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param body 
+  */
+  public void orderCreate (String clientId, String accessToken, String merchantId, Body body, final Response.Listener<InlineResponse201> responseListener, final Response.ErrorListener errorListener) {
+    Object postBody = body;
+
     // verify the required parameter 'clientId' is set
     if (clientId == null) {
       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderCreate",
@@ -284,92 +362,6 @@ public class OrderManagementApi {
     Map<String, String> headerParams = new HashMap<String, String>();
     // form params
     Map<String, String> formParams = new HashMap<String, String>();
-    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
-    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
-    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
-    String[] contentTypes = {
-      "application/json"
-    };
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    if (contentType.startsWith("multipart/form-data")) {
-      // file uploading
-      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
-      HttpEntity httpEntity = localVarBuilder.build();
-      postBody = httpEntity;
-    } else {
-      // normal form params
-    }
-
-    String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
-
-    try {
-      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType, authNames);
-      if (localVarResponse != null) {
-         return (Response) ApiInvoker.deserialize(localVarResponse, "", Response.class);
-      } else {
-         return null;
-      }
-    } catch (ApiException ex) {
-       throw ex;
-    } catch (InterruptedException ex) {
-       throw ex;
-    } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
-    } catch (TimeoutException ex) {
-       throw ex;
-    }
-  }
-
-      /**
-   * 
-   * Recurso responsável por efetuar a criação de um pedido.
-   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param body 
-  */
-  public void orderCreate (String clientId, String accessToken, String merchantId, Order body, final Response.Listener<Response> responseListener, final Response.ErrorListener errorListener) {
-    Object postBody = body;
-
-  
-    // verify the required parameter 'clientId' is set
-    if (clientId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderCreate",
-         new ApiException(400, "Missing the required parameter 'clientId' when calling orderCreate"));
-    }
-    
-    // verify the required parameter 'accessToken' is set
-    if (accessToken == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderCreate",
-         new ApiException(400, "Missing the required parameter 'accessToken' when calling orderCreate"));
-    }
-    
-    // verify the required parameter 'merchantId' is set
-    if (merchantId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderCreate",
-         new ApiException(400, "Missing the required parameter 'merchantId' when calling orderCreate"));
-    }
-    
-    // verify the required parameter 'body' is set
-    if (body == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'body' when calling orderCreate",
-         new ApiException(400, "Missing the required parameter 'body' when calling orderCreate"));
-    }
-    
-
-    // create path and map variables
-    String path = "/orders".replaceAll("\\{format\\}","json");
-
-    // query params
-    List<Pair> queryParams = new ArrayList<Pair>();
-    // header params
-    Map<String, String> headerParams = new HashMap<String, String>();
-    // form params
-    Map<String, String> formParams = new HashMap<String, String>();
 
 
     headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
@@ -392,7 +384,7 @@ public class OrderManagementApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -400,7 +392,7 @@ public class OrderManagementApi {
           @Override
           public void onResponse(String localVarResponse) {
             try {
-              responseListener.onResponse((Response) ApiInvoker.deserialize(localVarResponse,  "", Response.class));
+              responseListener.onResponse((InlineResponse201) ApiInvoker.deserialize(localVarResponse,  "", InlineResponse201.class));
             } catch (ApiException exception) {
                errorListener.onErrorResponse(new VolleyError(exception));
             }
@@ -448,7 +440,7 @@ public class OrderManagementApi {
     }
 
     // create path and map variables
-    String path = "/orders/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
+    String path = "/orders/{id}".replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -472,7 +464,7 @@ public class OrderManagementApi {
       // normal form params
     }
 
-    String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
 
     try {
       String localVarResponse = apiInvoker.invokeAPI (basePath, path, "DELETE", queryParams, postBody, headerParams, formParams, contentType, authNames);
@@ -486,15 +478,15 @@ public class OrderManagementApi {
     } catch (InterruptedException ex) {
        throw ex;
     } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
     } catch (TimeoutException ex) {
-       throw ex;
+      throw ex;
     }
   }
 
@@ -506,31 +498,26 @@ public class OrderManagementApi {
   public void orderDelete (String clientId, String accessToken, String merchantId, String id, final Response.Listener<String> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = null;
 
-  
     // verify the required parameter 'clientId' is set
     if (clientId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderDelete",
-         new ApiException(400, "Missing the required parameter 'clientId' when calling orderDelete"));
+      VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderDelete",
+        new ApiException(400, "Missing the required parameter 'clientId' when calling orderDelete"));
     }
-    
     // verify the required parameter 'accessToken' is set
     if (accessToken == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderDelete",
-         new ApiException(400, "Missing the required parameter 'accessToken' when calling orderDelete"));
+      VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderDelete",
+        new ApiException(400, "Missing the required parameter 'accessToken' when calling orderDelete"));
     }
-    
     // verify the required parameter 'merchantId' is set
     if (merchantId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderDelete",
-         new ApiException(400, "Missing the required parameter 'merchantId' when calling orderDelete"));
+      VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderDelete",
+        new ApiException(400, "Missing the required parameter 'merchantId' when calling orderDelete"));
     }
-    
     // verify the required parameter 'id' is set
     if (id == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderDelete",
-         new ApiException(400, "Missing the required parameter 'id' when calling orderDelete"));
+      VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderDelete",
+        new ApiException(400, "Missing the required parameter 'id' when calling orderDelete"));
     }
-    
 
     // create path and map variables
     String path = "/orders/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
@@ -563,7 +550,7 @@ public class OrderManagementApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "DELETE", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -590,10 +577,95 @@ public class OrderManagementApi {
    * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.
    * @param id Identificador do pedido.
    * @param itemId Identificador do item do pedido.
-   * @return Response
+   * @return InlineResponse201
   */
-  public Response orderDeleteItem (String clientId, String accessToken, String merchantId, String id, String itemId) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
+  public InlineResponse201 orderDeleteItem (String clientId, String accessToken, String merchantId, String id, String itemId) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
     Object postBody = null;
+    // verify the required parameter 'clientId' is set
+    if (clientId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderDeleteItem",
+        new ApiException(400, "Missing the required parameter 'clientId' when calling orderDeleteItem"));
+    }
+    // verify the required parameter 'accessToken' is set
+    if (accessToken == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderDeleteItem",
+        new ApiException(400, "Missing the required parameter 'accessToken' when calling orderDeleteItem"));
+    }
+    // verify the required parameter 'merchantId' is set
+    if (merchantId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderDeleteItem",
+        new ApiException(400, "Missing the required parameter 'merchantId' when calling orderDeleteItem"));
+    }
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderDeleteItem",
+        new ApiException(400, "Missing the required parameter 'id' when calling orderDeleteItem"));
+    }
+    // verify the required parameter 'itemId' is set
+    if (itemId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'itemId' when calling orderDeleteItem",
+        new ApiException(400, "Missing the required parameter 'itemId' when calling orderDeleteItem"));
+    }
+
+    // create path and map variables
+    String path = "/orders/{id}/items/{itemId}".replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString())).replaceAll("\\{" + "itemId" + "\\}", apiInvoker.escapeString(itemId.toString()));
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    // header params
+    Map<String, String> headerParams = new HashMap<String, String>();
+    // form params
+    Map<String, String> formParams = new HashMap<String, String>();
+    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
+    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
+    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
+    String[] contentTypes = {
+    };
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+
+    if (contentType.startsWith("multipart/form-data")) {
+      // file uploading
+      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
+      HttpEntity httpEntity = localVarBuilder.build();
+      postBody = httpEntity;
+    } else {
+      // normal form params
+    }
+
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
+
+    try {
+      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "DELETE", queryParams, postBody, headerParams, formParams, contentType, authNames);
+      if (localVarResponse != null) {
+         return (InlineResponse201) ApiInvoker.deserialize(localVarResponse, "", InlineResponse201.class);
+      } else {
+         return null;
+      }
+    } catch (ApiException ex) {
+       throw ex;
+    } catch (InterruptedException ex) {
+       throw ex;
+    } catch (ExecutionException ex) {
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
+    } catch (TimeoutException ex) {
+      throw ex;
+    }
+  }
+
+      /**
+   * 
+   * Recurso responsável por efetuar a exclusão de um item de um pedido.
+   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param id Identificador do pedido.   * @param itemId Identificador do item do pedido.
+  */
+  public void orderDeleteItem (String clientId, String accessToken, String merchantId, String id, String itemId, final Response.Listener<InlineResponse201> responseListener, final Response.ErrorListener errorListener) {
+    Object postBody = null;
+
     // verify the required parameter 'clientId' is set
     if (clientId == null) {
       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderDeleteItem",
@@ -629,97 +701,6 @@ public class OrderManagementApi {
     Map<String, String> headerParams = new HashMap<String, String>();
     // form params
     Map<String, String> formParams = new HashMap<String, String>();
-    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
-    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
-    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
-    String[] contentTypes = {
-    };
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    if (contentType.startsWith("multipart/form-data")) {
-      // file uploading
-      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
-      HttpEntity httpEntity = localVarBuilder.build();
-      postBody = httpEntity;
-    } else {
-      // normal form params
-    }
-
-    String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
-
-    try {
-      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "DELETE", queryParams, postBody, headerParams, formParams, contentType, authNames);
-      if (localVarResponse != null) {
-         return (Response) ApiInvoker.deserialize(localVarResponse, "", Response.class);
-      } else {
-         return null;
-      }
-    } catch (ApiException ex) {
-       throw ex;
-    } catch (InterruptedException ex) {
-       throw ex;
-    } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
-    } catch (TimeoutException ex) {
-       throw ex;
-    }
-  }
-
-      /**
-   * 
-   * Recurso responsável por efetuar a exclusão de um item de um pedido.
-   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param id Identificador do pedido.   * @param itemId Identificador do item do pedido.
-  */
-  public void orderDeleteItem (String clientId, String accessToken, String merchantId, String id, String itemId, final Response.Listener<Response> responseListener, final Response.ErrorListener errorListener) {
-    Object postBody = null;
-
-  
-    // verify the required parameter 'clientId' is set
-    if (clientId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderDeleteItem",
-         new ApiException(400, "Missing the required parameter 'clientId' when calling orderDeleteItem"));
-    }
-    
-    // verify the required parameter 'accessToken' is set
-    if (accessToken == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderDeleteItem",
-         new ApiException(400, "Missing the required parameter 'accessToken' when calling orderDeleteItem"));
-    }
-    
-    // verify the required parameter 'merchantId' is set
-    if (merchantId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderDeleteItem",
-         new ApiException(400, "Missing the required parameter 'merchantId' when calling orderDeleteItem"));
-    }
-    
-    // verify the required parameter 'id' is set
-    if (id == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderDeleteItem",
-         new ApiException(400, "Missing the required parameter 'id' when calling orderDeleteItem"));
-    }
-    
-    // verify the required parameter 'itemId' is set
-    if (itemId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'itemId' when calling orderDeleteItem",
-         new ApiException(400, "Missing the required parameter 'itemId' when calling orderDeleteItem"));
-    }
-    
-
-    // create path and map variables
-    String path = "/orders/{id}/items/{itemId}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString())).replaceAll("\\{" + "itemId" + "\\}", apiInvoker.escapeString(itemId.toString()));
-
-    // query params
-    List<Pair> queryParams = new ArrayList<Pair>();
-    // header params
-    Map<String, String> headerParams = new HashMap<String, String>();
-    // form params
-    Map<String, String> formParams = new HashMap<String, String>();
 
 
     headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
@@ -742,7 +723,7 @@ public class OrderManagementApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "DELETE", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -750,7 +731,7 @@ public class OrderManagementApi {
           @Override
           public void onResponse(String localVarResponse) {
             try {
-              responseListener.onResponse((Response) ApiInvoker.deserialize(localVarResponse,  "", Response.class));
+              responseListener.onResponse((InlineResponse201) ApiInvoker.deserialize(localVarResponse,  "", InlineResponse201.class));
             } catch (ApiException exception) {
                errorListener.onErrorResponse(new VolleyError(exception));
             }
@@ -772,10 +753,90 @@ public class OrderManagementApi {
    * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.
    * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.
    * @param id Identificador do pedido.
-   * @return Order
+   * @return InlineResponse200
   */
-  public Order orderGet (String clientId, String accessToken, String merchantId, String id) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
+  public InlineResponse200 orderGet (String clientId, String accessToken, String merchantId, String id) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
     Object postBody = null;
+    // verify the required parameter 'clientId' is set
+    if (clientId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderGet",
+        new ApiException(400, "Missing the required parameter 'clientId' when calling orderGet"));
+    }
+    // verify the required parameter 'accessToken' is set
+    if (accessToken == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderGet",
+        new ApiException(400, "Missing the required parameter 'accessToken' when calling orderGet"));
+    }
+    // verify the required parameter 'merchantId' is set
+    if (merchantId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderGet",
+        new ApiException(400, "Missing the required parameter 'merchantId' when calling orderGet"));
+    }
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderGet",
+        new ApiException(400, "Missing the required parameter 'id' when calling orderGet"));
+    }
+
+    // create path and map variables
+    String path = "/orders/{id}".replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    // header params
+    Map<String, String> headerParams = new HashMap<String, String>();
+    // form params
+    Map<String, String> formParams = new HashMap<String, String>();
+    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
+    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
+    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
+    String[] contentTypes = {
+    };
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+
+    if (contentType.startsWith("multipart/form-data")) {
+      // file uploading
+      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
+      HttpEntity httpEntity = localVarBuilder.build();
+      postBody = httpEntity;
+    } else {
+      // normal form params
+    }
+
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
+
+    try {
+      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames);
+      if (localVarResponse != null) {
+         return (InlineResponse200) ApiInvoker.deserialize(localVarResponse, "", InlineResponse200.class);
+      } else {
+         return null;
+      }
+    } catch (ApiException ex) {
+       throw ex;
+    } catch (InterruptedException ex) {
+       throw ex;
+    } catch (ExecutionException ex) {
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
+    } catch (TimeoutException ex) {
+      throw ex;
+    }
+  }
+
+      /**
+   * 
+   * Recurso responsável por efetuar a consulta de um pedido.
+   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param id Identificador do pedido.
+  */
+  public void orderGet (String clientId, String accessToken, String merchantId, String id, final Response.Listener<InlineResponse200> responseListener, final Response.ErrorListener errorListener) {
+    Object postBody = null;
+
     // verify the required parameter 'clientId' is set
     if (clientId == null) {
       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderGet",
@@ -806,91 +867,6 @@ public class OrderManagementApi {
     Map<String, String> headerParams = new HashMap<String, String>();
     // form params
     Map<String, String> formParams = new HashMap<String, String>();
-    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
-    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
-    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
-    String[] contentTypes = {
-    };
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    if (contentType.startsWith("multipart/form-data")) {
-      // file uploading
-      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
-      HttpEntity httpEntity = localVarBuilder.build();
-      postBody = httpEntity;
-    } else {
-      // normal form params
-    }
-
-    String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
-
-    try {
-      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames);
-      if (localVarResponse != null) {
-         return (Order) ApiInvoker.deserialize(localVarResponse, "", Order.class);
-      } else {
-         return null;
-      }
-    } catch (ApiException ex) {
-       throw ex;
-    } catch (InterruptedException ex) {
-       throw ex;
-    } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
-    } catch (TimeoutException ex) {
-       throw ex;
-    }
-  }
-
-      /**
-   * 
-   * Recurso responsável por efetuar a consulta de um pedido.
-   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param id Identificador do pedido.
-  */
-  public void orderGet (String clientId, String accessToken, String merchantId, String id, final Response.Listener<Order> responseListener, final Response.ErrorListener errorListener) {
-    Object postBody = null;
-
-  
-    // verify the required parameter 'clientId' is set
-    if (clientId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderGet",
-         new ApiException(400, "Missing the required parameter 'clientId' when calling orderGet"));
-    }
-    
-    // verify the required parameter 'accessToken' is set
-    if (accessToken == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderGet",
-         new ApiException(400, "Missing the required parameter 'accessToken' when calling orderGet"));
-    }
-    
-    // verify the required parameter 'merchantId' is set
-    if (merchantId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderGet",
-         new ApiException(400, "Missing the required parameter 'merchantId' when calling orderGet"));
-    }
-    
-    // verify the required parameter 'id' is set
-    if (id == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderGet",
-         new ApiException(400, "Missing the required parameter 'id' when calling orderGet"));
-    }
-    
-
-    // create path and map variables
-    String path = "/orders/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
-
-    // query params
-    List<Pair> queryParams = new ArrayList<Pair>();
-    // header params
-    Map<String, String> headerParams = new HashMap<String, String>();
-    // form params
-    Map<String, String> formParams = new HashMap<String, String>();
 
 
     headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
@@ -913,7 +889,7 @@ public class OrderManagementApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -921,7 +897,7 @@ public class OrderManagementApi {
           @Override
           public void onResponse(String localVarResponse) {
             try {
-              responseListener.onResponse((Order) ApiInvoker.deserialize(localVarResponse,  "", Order.class));
+              responseListener.onResponse((InlineResponse200) ApiInvoker.deserialize(localVarResponse,  "", InlineResponse200.class));
             } catch (ApiException exception) {
                errorListener.onErrorResponse(new VolleyError(exception));
             }
@@ -943,10 +919,91 @@ public class OrderManagementApi {
    * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.
    * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.
    * @param parameters Parâmetros para filtrar a consulta. Os possíveis parâmetros são: number (Número do pedidos), reference (Referência do pedido) e status (Status do pedidos: DRAFT, ENTERED, CANCELED, PAID, APPROVED, REJECTED, RE-ENTERED e CLOSED).
-   * @return void
+   * @return List<InlineResponse200>
   */
-  public void orderGetByParameters (String clientId, String accessToken, String merchantId, String parameters) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
+  public List<InlineResponse200> orderGetByParameters (String clientId, String accessToken, String merchantId, String parameters) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
     Object postBody = null;
+    // verify the required parameter 'clientId' is set
+    if (clientId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderGetByParameters",
+        new ApiException(400, "Missing the required parameter 'clientId' when calling orderGetByParameters"));
+    }
+    // verify the required parameter 'accessToken' is set
+    if (accessToken == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderGetByParameters",
+        new ApiException(400, "Missing the required parameter 'accessToken' when calling orderGetByParameters"));
+    }
+    // verify the required parameter 'merchantId' is set
+    if (merchantId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderGetByParameters",
+        new ApiException(400, "Missing the required parameter 'merchantId' when calling orderGetByParameters"));
+    }
+    // verify the required parameter 'parameters' is set
+    if (parameters == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'parameters' when calling orderGetByParameters",
+        new ApiException(400, "Missing the required parameter 'parameters' when calling orderGetByParameters"));
+    }
+
+    // create path and map variables
+    String path = "/orders";
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    // header params
+    Map<String, String> headerParams = new HashMap<String, String>();
+    // form params
+    Map<String, String> formParams = new HashMap<String, String>();
+    queryParams.addAll(ApiInvoker.parameterToPairs("", "parameters", parameters));
+    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
+    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
+    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
+    String[] contentTypes = {
+    };
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+
+    if (contentType.startsWith("multipart/form-data")) {
+      // file uploading
+      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
+      HttpEntity httpEntity = localVarBuilder.build();
+      postBody = httpEntity;
+    } else {
+      // normal form params
+    }
+
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
+
+    try {
+      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames);
+      if (localVarResponse != null) {
+         return (List<InlineResponse200>) ApiInvoker.deserialize(localVarResponse, "array", InlineResponse200.class);
+      } else {
+         return null;
+      }
+    } catch (ApiException ex) {
+       throw ex;
+    } catch (InterruptedException ex) {
+       throw ex;
+    } catch (ExecutionException ex) {
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
+    } catch (TimeoutException ex) {
+      throw ex;
+    }
+  }
+
+      /**
+   * 
+   * Recurso responsável por efetuar a consulta de pedidos, com a possibilidade de aplicar filtros.
+   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param parameters Parâmetros para filtrar a consulta. Os possíveis parâmetros são: number (Número do pedidos), reference (Referência do pedido) e status (Status do pedidos: DRAFT, ENTERED, CANCELED, PAID, APPROVED, REJECTED, RE-ENTERED e CLOSED).
+  */
+  public void orderGetByParameters (String clientId, String accessToken, String merchantId, String parameters, final Response.Listener<List<InlineResponse200>> responseListener, final Response.ErrorListener errorListener) {
+    Object postBody = null;
+
     // verify the required parameter 'clientId' is set
     if (clientId == null) {
       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderGetByParameters",
@@ -977,92 +1034,6 @@ public class OrderManagementApi {
     Map<String, String> headerParams = new HashMap<String, String>();
     // form params
     Map<String, String> formParams = new HashMap<String, String>();
-    queryParams.addAll(ApiInvoker.parameterToPairs("", "parameters", parameters));
-    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
-    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
-    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
-    String[] contentTypes = {
-    };
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    if (contentType.startsWith("multipart/form-data")) {
-      // file uploading
-      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
-      HttpEntity httpEntity = localVarBuilder.build();
-      postBody = httpEntity;
-    } else {
-      // normal form params
-    }
-
-    String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
-
-    try {
-      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames);
-      if (localVarResponse != null) {
-         return ;
-      } else {
-         return ;
-      }
-    } catch (ApiException ex) {
-       throw ex;
-    } catch (InterruptedException ex) {
-       throw ex;
-    } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
-    } catch (TimeoutException ex) {
-       throw ex;
-    }
-  }
-
-      /**
-   * 
-   * Recurso responsável por efetuar a consulta de pedidos, com a possibilidade de aplicar filtros.
-   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param parameters Parâmetros para filtrar a consulta. Os possíveis parâmetros são: number (Número do pedidos), reference (Referência do pedido) e status (Status do pedidos: DRAFT, ENTERED, CANCELED, PAID, APPROVED, REJECTED, RE-ENTERED e CLOSED).
-  */
-  public void orderGetByParameters (String clientId, String accessToken, String merchantId, String parameters, final Response.Listener<String> responseListener, final Response.ErrorListener errorListener) {
-    Object postBody = null;
-
-  
-    // verify the required parameter 'clientId' is set
-    if (clientId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderGetByParameters",
-         new ApiException(400, "Missing the required parameter 'clientId' when calling orderGetByParameters"));
-    }
-    
-    // verify the required parameter 'accessToken' is set
-    if (accessToken == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderGetByParameters",
-         new ApiException(400, "Missing the required parameter 'accessToken' when calling orderGetByParameters"));
-    }
-    
-    // verify the required parameter 'merchantId' is set
-    if (merchantId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderGetByParameters",
-         new ApiException(400, "Missing the required parameter 'merchantId' when calling orderGetByParameters"));
-    }
-    
-    // verify the required parameter 'parameters' is set
-    if (parameters == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'parameters' when calling orderGetByParameters",
-         new ApiException(400, "Missing the required parameter 'parameters' when calling orderGetByParameters"));
-    }
-    
-
-    // create path and map variables
-    String path = "/orders".replaceAll("\\{format\\}","json");
-
-    // query params
-    List<Pair> queryParams = new ArrayList<Pair>();
-    // header params
-    Map<String, String> headerParams = new HashMap<String, String>();
-    // form params
-    Map<String, String> formParams = new HashMap<String, String>();
 
     queryParams.addAll(ApiInvoker.parameterToPairs("", "parameters", parameters));
 
@@ -1086,14 +1057,18 @@ public class OrderManagementApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames,
         new Response.Listener<String>() {
           @Override
           public void onResponse(String localVarResponse) {
-              responseListener.onResponse(localVarResponse);
+            try {
+              responseListener.onResponse((List<InlineResponse200>) ApiInvoker.deserialize(localVarResponse,  "array", InlineResponse200.class));
+            } catch (ApiException exception) {
+               errorListener.onErrorResponse(new VolleyError(exception));
+            }
           }
       }, new Response.ErrorListener() {
           @Override
@@ -1112,10 +1087,90 @@ public class OrderManagementApi {
    * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.
    * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.
    * @param id Identificador do pedido.
-   * @return OrderItem
+   * @return OrdersItems
   */
-  public OrderItem orderGetItem (String clientId, String accessToken, String merchantId, String id) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
+  public OrdersItems orderGetItem (String clientId, String accessToken, String merchantId, String id) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
     Object postBody = null;
+    // verify the required parameter 'clientId' is set
+    if (clientId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderGetItem",
+        new ApiException(400, "Missing the required parameter 'clientId' when calling orderGetItem"));
+    }
+    // verify the required parameter 'accessToken' is set
+    if (accessToken == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderGetItem",
+        new ApiException(400, "Missing the required parameter 'accessToken' when calling orderGetItem"));
+    }
+    // verify the required parameter 'merchantId' is set
+    if (merchantId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderGetItem",
+        new ApiException(400, "Missing the required parameter 'merchantId' when calling orderGetItem"));
+    }
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderGetItem",
+        new ApiException(400, "Missing the required parameter 'id' when calling orderGetItem"));
+    }
+
+    // create path and map variables
+    String path = "/orders/{id}/items".replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    // header params
+    Map<String, String> headerParams = new HashMap<String, String>();
+    // form params
+    Map<String, String> formParams = new HashMap<String, String>();
+    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
+    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
+    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
+    String[] contentTypes = {
+    };
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+
+    if (contentType.startsWith("multipart/form-data")) {
+      // file uploading
+      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
+      HttpEntity httpEntity = localVarBuilder.build();
+      postBody = httpEntity;
+    } else {
+      // normal form params
+    }
+
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
+
+    try {
+      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames);
+      if (localVarResponse != null) {
+         return (OrdersItems) ApiInvoker.deserialize(localVarResponse, "", OrdersItems.class);
+      } else {
+         return null;
+      }
+    } catch (ApiException ex) {
+       throw ex;
+    } catch (InterruptedException ex) {
+       throw ex;
+    } catch (ExecutionException ex) {
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
+    } catch (TimeoutException ex) {
+      throw ex;
+    }
+  }
+
+      /**
+   * 
+   * Recurso responsável por efetuar a consulta de um item em um pedido.
+   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param id Identificador do pedido.
+  */
+  public void orderGetItem (String clientId, String accessToken, String merchantId, String id, final Response.Listener<OrdersItems> responseListener, final Response.ErrorListener errorListener) {
+    Object postBody = null;
+
     // verify the required parameter 'clientId' is set
     if (clientId == null) {
       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderGetItem",
@@ -1146,91 +1201,6 @@ public class OrderManagementApi {
     Map<String, String> headerParams = new HashMap<String, String>();
     // form params
     Map<String, String> formParams = new HashMap<String, String>();
-    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
-    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
-    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
-    String[] contentTypes = {
-    };
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    if (contentType.startsWith("multipart/form-data")) {
-      // file uploading
-      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
-      HttpEntity httpEntity = localVarBuilder.build();
-      postBody = httpEntity;
-    } else {
-      // normal form params
-    }
-
-    String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
-
-    try {
-      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames);
-      if (localVarResponse != null) {
-         return (OrderItem) ApiInvoker.deserialize(localVarResponse, "", OrderItem.class);
-      } else {
-         return null;
-      }
-    } catch (ApiException ex) {
-       throw ex;
-    } catch (InterruptedException ex) {
-       throw ex;
-    } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
-    } catch (TimeoutException ex) {
-       throw ex;
-    }
-  }
-
-      /**
-   * 
-   * Recurso responsável por efetuar a consulta de um item em um pedido.
-   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param id Identificador do pedido.
-  */
-  public void orderGetItem (String clientId, String accessToken, String merchantId, String id, final Response.Listener<OrderItem> responseListener, final Response.ErrorListener errorListener) {
-    Object postBody = null;
-
-  
-    // verify the required parameter 'clientId' is set
-    if (clientId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderGetItem",
-         new ApiException(400, "Missing the required parameter 'clientId' when calling orderGetItem"));
-    }
-    
-    // verify the required parameter 'accessToken' is set
-    if (accessToken == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderGetItem",
-         new ApiException(400, "Missing the required parameter 'accessToken' when calling orderGetItem"));
-    }
-    
-    // verify the required parameter 'merchantId' is set
-    if (merchantId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderGetItem",
-         new ApiException(400, "Missing the required parameter 'merchantId' when calling orderGetItem"));
-    }
-    
-    // verify the required parameter 'id' is set
-    if (id == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderGetItem",
-         new ApiException(400, "Missing the required parameter 'id' when calling orderGetItem"));
-    }
-    
-
-    // create path and map variables
-    String path = "/orders/{id}/items".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
-
-    // query params
-    List<Pair> queryParams = new ArrayList<Pair>();
-    // header params
-    Map<String, String> headerParams = new HashMap<String, String>();
-    // form params
-    Map<String, String> formParams = new HashMap<String, String>();
 
 
     headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
@@ -1253,7 +1223,7 @@ public class OrderManagementApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -1261,7 +1231,7 @@ public class OrderManagementApi {
           @Override
           public void onResponse(String localVarResponse) {
             try {
-              responseListener.onResponse((OrderItem) ApiInvoker.deserialize(localVarResponse,  "", OrderItem.class));
+              responseListener.onResponse((OrdersItems) ApiInvoker.deserialize(localVarResponse,  "", OrdersItems.class));
             } catch (ApiException exception) {
                errorListener.onErrorResponse(new VolleyError(exception));
             }
@@ -1283,10 +1253,90 @@ public class OrderManagementApi {
    * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.
    * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.
    * @param id Identificador do pedido.
-   * @return Transaction
+   * @return OrdersTransactions
   */
-  public Transaction orderGetTransactions (String clientId, String accessToken, String merchantId, String id) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
+  public OrdersTransactions orderGetTransactions (String clientId, String accessToken, String merchantId, String id) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
     Object postBody = null;
+    // verify the required parameter 'clientId' is set
+    if (clientId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderGetTransactions",
+        new ApiException(400, "Missing the required parameter 'clientId' when calling orderGetTransactions"));
+    }
+    // verify the required parameter 'accessToken' is set
+    if (accessToken == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderGetTransactions",
+        new ApiException(400, "Missing the required parameter 'accessToken' when calling orderGetTransactions"));
+    }
+    // verify the required parameter 'merchantId' is set
+    if (merchantId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderGetTransactions",
+        new ApiException(400, "Missing the required parameter 'merchantId' when calling orderGetTransactions"));
+    }
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderGetTransactions",
+        new ApiException(400, "Missing the required parameter 'id' when calling orderGetTransactions"));
+    }
+
+    // create path and map variables
+    String path = "/orders/{id}/transactions".replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    // header params
+    Map<String, String> headerParams = new HashMap<String, String>();
+    // form params
+    Map<String, String> formParams = new HashMap<String, String>();
+    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
+    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
+    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
+    String[] contentTypes = {
+    };
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+
+    if (contentType.startsWith("multipart/form-data")) {
+      // file uploading
+      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
+      HttpEntity httpEntity = localVarBuilder.build();
+      postBody = httpEntity;
+    } else {
+      // normal form params
+    }
+
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
+
+    try {
+      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames);
+      if (localVarResponse != null) {
+         return (OrdersTransactions) ApiInvoker.deserialize(localVarResponse, "", OrdersTransactions.class);
+      } else {
+         return null;
+      }
+    } catch (ApiException ex) {
+       throw ex;
+    } catch (InterruptedException ex) {
+       throw ex;
+    } catch (ExecutionException ex) {
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
+    } catch (TimeoutException ex) {
+      throw ex;
+    }
+  }
+
+      /**
+   * 
+   * Recurso responsável por efetuar a consulta das transações de um pedido.
+   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param id Identificador do pedido.
+  */
+  public void orderGetTransactions (String clientId, String accessToken, String merchantId, String id, final Response.Listener<OrdersTransactions> responseListener, final Response.ErrorListener errorListener) {
+    Object postBody = null;
+
     // verify the required parameter 'clientId' is set
     if (clientId == null) {
       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderGetTransactions",
@@ -1317,91 +1367,6 @@ public class OrderManagementApi {
     Map<String, String> headerParams = new HashMap<String, String>();
     // form params
     Map<String, String> formParams = new HashMap<String, String>();
-    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
-    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
-    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
-    String[] contentTypes = {
-    };
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    if (contentType.startsWith("multipart/form-data")) {
-      // file uploading
-      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
-      HttpEntity httpEntity = localVarBuilder.build();
-      postBody = httpEntity;
-    } else {
-      // normal form params
-    }
-
-    String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
-
-    try {
-      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames);
-      if (localVarResponse != null) {
-         return (Transaction) ApiInvoker.deserialize(localVarResponse, "", Transaction.class);
-      } else {
-         return null;
-      }
-    } catch (ApiException ex) {
-       throw ex;
-    } catch (InterruptedException ex) {
-       throw ex;
-    } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
-    } catch (TimeoutException ex) {
-       throw ex;
-    }
-  }
-
-      /**
-   * 
-   * Recurso responsável por efetuar a consulta das transações de um pedido.
-   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param id Identificador do pedido.
-  */
-  public void orderGetTransactions (String clientId, String accessToken, String merchantId, String id, final Response.Listener<Transaction> responseListener, final Response.ErrorListener errorListener) {
-    Object postBody = null;
-
-  
-    // verify the required parameter 'clientId' is set
-    if (clientId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderGetTransactions",
-         new ApiException(400, "Missing the required parameter 'clientId' when calling orderGetTransactions"));
-    }
-    
-    // verify the required parameter 'accessToken' is set
-    if (accessToken == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderGetTransactions",
-         new ApiException(400, "Missing the required parameter 'accessToken' when calling orderGetTransactions"));
-    }
-    
-    // verify the required parameter 'merchantId' is set
-    if (merchantId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderGetTransactions",
-         new ApiException(400, "Missing the required parameter 'merchantId' when calling orderGetTransactions"));
-    }
-    
-    // verify the required parameter 'id' is set
-    if (id == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderGetTransactions",
-         new ApiException(400, "Missing the required parameter 'id' when calling orderGetTransactions"));
-    }
-    
-
-    // create path and map variables
-    String path = "/orders/{id}/transactions".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
-
-    // query params
-    List<Pair> queryParams = new ArrayList<Pair>();
-    // header params
-    Map<String, String> headerParams = new HashMap<String, String>();
-    // form params
-    Map<String, String> formParams = new HashMap<String, String>();
 
 
     headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
@@ -1424,7 +1389,7 @@ public class OrderManagementApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -1432,7 +1397,7 @@ public class OrderManagementApi {
           @Override
           public void onResponse(String localVarResponse) {
             try {
-              responseListener.onResponse((Transaction) ApiInvoker.deserialize(localVarResponse,  "", Transaction.class));
+              responseListener.onResponse((OrdersTransactions) ApiInvoker.deserialize(localVarResponse,  "", OrdersTransactions.class));
             } catch (ApiException exception) {
                errorListener.onErrorResponse(new VolleyError(exception));
             }
@@ -1486,7 +1451,7 @@ public class OrderManagementApi {
     }
 
     // create path and map variables
-    String path = "/orders/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
+    String path = "/orders/{id}".replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -1511,7 +1476,7 @@ public class OrderManagementApi {
       // normal form params
     }
 
-    String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
 
     try {
       String localVarResponse = apiInvoker.invokeAPI (basePath, path, "PUT", queryParams, postBody, headerParams, formParams, contentType, authNames);
@@ -1525,15 +1490,15 @@ public class OrderManagementApi {
     } catch (InterruptedException ex) {
        throw ex;
     } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
     } catch (TimeoutException ex) {
-       throw ex;
+      throw ex;
     }
   }
 
@@ -1545,37 +1510,31 @@ public class OrderManagementApi {
   public void orderUpdate (String clientId, String accessToken, String merchantId, String id, String operation, final Response.Listener<String> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = null;
 
-  
     // verify the required parameter 'clientId' is set
     if (clientId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderUpdate",
-         new ApiException(400, "Missing the required parameter 'clientId' when calling orderUpdate"));
+      VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderUpdate",
+        new ApiException(400, "Missing the required parameter 'clientId' when calling orderUpdate"));
     }
-    
     // verify the required parameter 'accessToken' is set
     if (accessToken == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderUpdate",
-         new ApiException(400, "Missing the required parameter 'accessToken' when calling orderUpdate"));
+      VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderUpdate",
+        new ApiException(400, "Missing the required parameter 'accessToken' when calling orderUpdate"));
     }
-    
     // verify the required parameter 'merchantId' is set
     if (merchantId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderUpdate",
-         new ApiException(400, "Missing the required parameter 'merchantId' when calling orderUpdate"));
+      VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderUpdate",
+        new ApiException(400, "Missing the required parameter 'merchantId' when calling orderUpdate"));
     }
-    
     // verify the required parameter 'id' is set
     if (id == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderUpdate",
-         new ApiException(400, "Missing the required parameter 'id' when calling orderUpdate"));
+      VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderUpdate",
+        new ApiException(400, "Missing the required parameter 'id' when calling orderUpdate"));
     }
-    
     // verify the required parameter 'operation' is set
     if (operation == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'operation' when calling orderUpdate",
-         new ApiException(400, "Missing the required parameter 'operation' when calling orderUpdate"));
+      VolleyError error = new VolleyError("Missing the required parameter 'operation' when calling orderUpdate",
+        new ApiException(400, "Missing the required parameter 'operation' when calling orderUpdate"));
     }
-    
 
     // create path and map variables
     String path = "/orders/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
@@ -1609,7 +1568,7 @@ public class OrderManagementApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "PUT", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -1637,10 +1596,101 @@ public class OrderManagementApi {
    * @param id Identificador do pedido.
    * @param itemId Identificador do item do pedido.
    * @param body 
-   * @return Response
+   * @return InlineResponse201
   */
-  public Response orderUpdateItem (String clientId, String accessToken, String merchantId, String id, String itemId, OrderItem body) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
+  public InlineResponse201 orderUpdateItem (String clientId, String accessToken, String merchantId, String id, String itemId, Body2 body) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
     Object postBody = body;
+    // verify the required parameter 'clientId' is set
+    if (clientId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderUpdateItem",
+        new ApiException(400, "Missing the required parameter 'clientId' when calling orderUpdateItem"));
+    }
+    // verify the required parameter 'accessToken' is set
+    if (accessToken == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderUpdateItem",
+        new ApiException(400, "Missing the required parameter 'accessToken' when calling orderUpdateItem"));
+    }
+    // verify the required parameter 'merchantId' is set
+    if (merchantId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderUpdateItem",
+        new ApiException(400, "Missing the required parameter 'merchantId' when calling orderUpdateItem"));
+    }
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderUpdateItem",
+        new ApiException(400, "Missing the required parameter 'id' when calling orderUpdateItem"));
+    }
+    // verify the required parameter 'itemId' is set
+    if (itemId == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'itemId' when calling orderUpdateItem",
+        new ApiException(400, "Missing the required parameter 'itemId' when calling orderUpdateItem"));
+    }
+    // verify the required parameter 'body' is set
+    if (body == null) {
+      VolleyError error = new VolleyError("Missing the required parameter 'body' when calling orderUpdateItem",
+        new ApiException(400, "Missing the required parameter 'body' when calling orderUpdateItem"));
+    }
+
+    // create path and map variables
+    String path = "/orders/{id}/items/{itemId}".replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString())).replaceAll("\\{" + "itemId" + "\\}", apiInvoker.escapeString(itemId.toString()));
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    // header params
+    Map<String, String> headerParams = new HashMap<String, String>();
+    // form params
+    Map<String, String> formParams = new HashMap<String, String>();
+    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
+    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
+    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
+    String[] contentTypes = {
+      "application/json"
+    };
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+
+    if (contentType.startsWith("multipart/form-data")) {
+      // file uploading
+      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
+      HttpEntity httpEntity = localVarBuilder.build();
+      postBody = httpEntity;
+    } else {
+      // normal form params
+    }
+
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
+
+    try {
+      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "PUT", queryParams, postBody, headerParams, formParams, contentType, authNames);
+      if (localVarResponse != null) {
+         return (InlineResponse201) ApiInvoker.deserialize(localVarResponse, "", InlineResponse201.class);
+      } else {
+         return null;
+      }
+    } catch (ApiException ex) {
+       throw ex;
+    } catch (InterruptedException ex) {
+       throw ex;
+    } catch (ExecutionException ex) {
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
+    } catch (TimeoutException ex) {
+      throw ex;
+    }
+  }
+
+      /**
+   * 
+   * Recurso responsável por efetuar a alteração de um item de um pedido.
+   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param id Identificador do pedido.   * @param itemId Identificador do item do pedido.   * @param body 
+  */
+  public void orderUpdateItem (String clientId, String accessToken, String merchantId, String id, String itemId, Body2 body, final Response.Listener<InlineResponse201> responseListener, final Response.ErrorListener errorListener) {
+    Object postBody = body;
+
     // verify the required parameter 'clientId' is set
     if (clientId == null) {
       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderUpdateItem",
@@ -1681,104 +1731,6 @@ public class OrderManagementApi {
     Map<String, String> headerParams = new HashMap<String, String>();
     // form params
     Map<String, String> formParams = new HashMap<String, String>();
-    headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
-    headerParams.put("access-token", ApiInvoker.parameterToString(accessToken));
-    headerParams.put("merchant-id", ApiInvoker.parameterToString(merchantId));
-    String[] contentTypes = {
-      "application/json"
-    };
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    if (contentType.startsWith("multipart/form-data")) {
-      // file uploading
-      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
-      HttpEntity httpEntity = localVarBuilder.build();
-      postBody = httpEntity;
-    } else {
-      // normal form params
-    }
-
-    String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
-
-    try {
-      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "PUT", queryParams, postBody, headerParams, formParams, contentType, authNames);
-      if (localVarResponse != null) {
-         return (Response) ApiInvoker.deserialize(localVarResponse, "", Response.class);
-      } else {
-         return null;
-      }
-    } catch (ApiException ex) {
-       throw ex;
-    } catch (InterruptedException ex) {
-       throw ex;
-    } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
-    } catch (TimeoutException ex) {
-       throw ex;
-    }
-  }
-
-      /**
-   * 
-   * Recurso responsável por efetuar a alteração de um item de um pedido.
-   * @param clientId Token da aplicação (APP Token) gerado durante o processo de cadastro.   * @param accessToken Token de acesso (Access Token) gerado durante o processo de cadastro.   * @param merchantId Identificador do estabelecimento comercial gerado durante o processo de cadastro.   * @param id Identificador do pedido.   * @param itemId Identificador do item do pedido.   * @param body 
-  */
-  public void orderUpdateItem (String clientId, String accessToken, String merchantId, String id, String itemId, OrderItem body, final Response.Listener<Response> responseListener, final Response.ErrorListener errorListener) {
-    Object postBody = body;
-
-  
-    // verify the required parameter 'clientId' is set
-    if (clientId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'clientId' when calling orderUpdateItem",
-         new ApiException(400, "Missing the required parameter 'clientId' when calling orderUpdateItem"));
-    }
-    
-    // verify the required parameter 'accessToken' is set
-    if (accessToken == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'accessToken' when calling orderUpdateItem",
-         new ApiException(400, "Missing the required parameter 'accessToken' when calling orderUpdateItem"));
-    }
-    
-    // verify the required parameter 'merchantId' is set
-    if (merchantId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'merchantId' when calling orderUpdateItem",
-         new ApiException(400, "Missing the required parameter 'merchantId' when calling orderUpdateItem"));
-    }
-    
-    // verify the required parameter 'id' is set
-    if (id == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'id' when calling orderUpdateItem",
-         new ApiException(400, "Missing the required parameter 'id' when calling orderUpdateItem"));
-    }
-    
-    // verify the required parameter 'itemId' is set
-    if (itemId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'itemId' when calling orderUpdateItem",
-         new ApiException(400, "Missing the required parameter 'itemId' when calling orderUpdateItem"));
-    }
-    
-    // verify the required parameter 'body' is set
-    if (body == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'body' when calling orderUpdateItem",
-         new ApiException(400, "Missing the required parameter 'body' when calling orderUpdateItem"));
-    }
-    
-
-    // create path and map variables
-    String path = "/orders/{id}/items/{itemId}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString())).replaceAll("\\{" + "itemId" + "\\}", apiInvoker.escapeString(itemId.toString()));
-
-    // query params
-    List<Pair> queryParams = new ArrayList<Pair>();
-    // header params
-    Map<String, String> headerParams = new HashMap<String, String>();
-    // form params
-    Map<String, String> formParams = new HashMap<String, String>();
 
 
     headerParams.put("client-id", ApiInvoker.parameterToString(clientId));
@@ -1801,7 +1753,7 @@ public class OrderManagementApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "merchant-id", "access-token", "client-id" };
+    String[] authNames = new String[] { "access-token", "client-id", "merchant-id" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "PUT", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -1809,7 +1761,7 @@ public class OrderManagementApi {
           @Override
           public void onResponse(String localVarResponse) {
             try {
-              responseListener.onResponse((Response) ApiInvoker.deserialize(localVarResponse,  "", Response.class));
+              responseListener.onResponse((InlineResponse201) ApiInvoker.deserialize(localVarResponse,  "", InlineResponse201.class));
             } catch (ApiException exception) {
                errorListener.onErrorResponse(new VolleyError(exception));
             }

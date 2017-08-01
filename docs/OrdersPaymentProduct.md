@@ -1,5 +1,5 @@
 
-# PaymentProduct
+# OrdersPaymentProduct
 
 ## Properties
 Name | Type | Description | Notes

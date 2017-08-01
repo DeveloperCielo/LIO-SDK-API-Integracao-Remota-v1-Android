@@ -20,7 +20,7 @@ import io.swagger.annotations.*;
 import com.google.gson.annotations.SerializedName;
 
 @ApiModel(description = "")
-public class Order {
+public class InlineResponse200 {
   
   @SerializedName("id")
   private String id = null;
@@ -178,18 +178,18 @@ public class Order {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Order order = (Order) o;
-    return (this.id == null ? order.id == null : this.id.equals(order.id)) &&
-        (this.number == null ? order.number == null : this.number.equals(order.number)) &&
-        (this.reference == null ? order.reference == null : this.reference.equals(order.reference)) &&
-        (this.status == null ? order.status == null : this.status.equals(order.status)) &&
-        (this.createdAt == null ? order.createdAt == null : this.createdAt.equals(order.createdAt)) &&
-        (this.updatedAt == null ? order.updatedAt == null : this.updatedAt.equals(order.updatedAt)) &&
-        (this.items == null ? order.items == null : this.items.equals(order.items)) &&
-        (this.notes == null ? order.notes == null : this.notes.equals(order.notes)) &&
-        (this.transactions == null ? order.transactions == null : this.transactions.equals(order.transactions)) &&
-        (this.price == null ? order.price == null : this.price.equals(order.price)) &&
-        (this.remaining == null ? order.remaining == null : this.remaining.equals(order.remaining));
+    InlineResponse200 inlineResponse200 = (InlineResponse200) o;
+    return (this.id == null ? inlineResponse200.id == null : this.id.equals(inlineResponse200.id)) &&
+        (this.number == null ? inlineResponse200.number == null : this.number.equals(inlineResponse200.number)) &&
+        (this.reference == null ? inlineResponse200.reference == null : this.reference.equals(inlineResponse200.reference)) &&
+        (this.status == null ? inlineResponse200.status == null : this.status.equals(inlineResponse200.status)) &&
+        (this.createdAt == null ? inlineResponse200.createdAt == null : this.createdAt.equals(inlineResponse200.createdAt)) &&
+        (this.updatedAt == null ? inlineResponse200.updatedAt == null : this.updatedAt.equals(inlineResponse200.updatedAt)) &&
+        (this.items == null ? inlineResponse200.items == null : this.items.equals(inlineResponse200.items)) &&
+        (this.notes == null ? inlineResponse200.notes == null : this.notes.equals(inlineResponse200.notes)) &&
+        (this.transactions == null ? inlineResponse200.transactions == null : this.transactions.equals(inlineResponse200.transactions)) &&
+        (this.price == null ? inlineResponse200.price == null : this.price.equals(inlineResponse200.price)) &&
+        (this.remaining == null ? inlineResponse200.remaining == null : this.remaining.equals(inlineResponse200.remaining));
   }
 
   @Override
@@ -212,7 +212,7 @@ public class Order {
   @Override
   public String toString()  {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Order {\n");
+    sb.append("class InlineResponse200 {\n");
     
     sb.append("  id: ").append(id).append("\n");
     sb.append("  number: ").append(number).append("\n");

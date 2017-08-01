@@ -68,9 +68,9 @@ public class OrderManagementApiExample {
         String accessToken = "accessToken_example"; // String | Token de acesso (Access Token) gerado durante o processo de cadastro.
         String merchantId = "merchantId_example"; // String | Identificador do estabelecimento comercial gerado durante o processo de cadastro.
         String id = "id_example"; // String | Identificador do pedido.
-        OrderItem body = new OrderItem(); // OrderItem | 
+        Body1 body = new Body1(); // Body1 | 
         try {
-            Response result = apiInstance.orderAddItem(clientId, accessToken, merchantId, id, body);
+            InlineResponse201 result = apiInstance.orderAddItem(clientId, accessToken, merchantId, id, body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling OrderManagementApi#orderAddItem");
@@ -101,10 +101,21 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [Body](docs/Body.md)
+ - [Body1](docs/Body1.md)
+ - [Body2](docs/Body2.md)
  - [Card](docs/Card.md)
  - [ErrorResponse](docs/ErrorResponse.md)
+ - [InlineResponse200](docs/InlineResponse200.md)
+ - [InlineResponse201](docs/InlineResponse201.md)
+ - [InlineResponse401](docs/InlineResponse401.md)
  - [Order](docs/Order.md)
  - [OrderItem](docs/OrderItem.md)
+ - [OrdersCard](docs/OrdersCard.md)
+ - [OrdersItems](docs/OrdersItems.md)
+ - [OrdersPaymentProduct](docs/OrdersPaymentProduct.md)
+ - [OrdersPaymentProductSub](docs/OrdersPaymentProductSub.md)
+ - [OrdersTransactions](docs/OrdersTransactions.md)
  - [PaymentProduct](docs/PaymentProduct.md)
  - [Response](docs/Response.md)
  - [SubPaymentProduct](docs/SubPaymentProduct.md)

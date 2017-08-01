@@ -20,7 +20,7 @@ import io.swagger.annotations.*;
 import com.google.gson.annotations.SerializedName;
 
 @ApiModel(description = "")
-public class Order {
+public class Body {
   
   @SerializedName("id")
   private String id = null;
@@ -178,18 +178,18 @@ public class Order {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Order order = (Order) o;
-    return (this.id == null ? order.id == null : this.id.equals(order.id)) &&
-        (this.number == null ? order.number == null : this.number.equals(order.number)) &&
-        (this.reference == null ? order.reference == null : this.reference.equals(order.reference)) &&
-        (this.status == null ? order.status == null : this.status.equals(order.status)) &&
-        (this.createdAt == null ? order.createdAt == null : this.createdAt.equals(order.createdAt)) &&
-        (this.updatedAt == null ? order.updatedAt == null : this.updatedAt.equals(order.updatedAt)) &&
-        (this.items == null ? order.items == null : this.items.equals(order.items)) &&
-        (this.notes == null ? order.notes == null : this.notes.equals(order.notes)) &&
-        (this.transactions == null ? order.transactions == null : this.transactions.equals(order.transactions)) &&
-        (this.price == null ? order.price == null : this.price.equals(order.price)) &&
-        (this.remaining == null ? order.remaining == null : this.remaining.equals(order.remaining));
+    Body body = (Body) o;
+    return (this.id == null ? body.id == null : this.id.equals(body.id)) &&
+        (this.number == null ? body.number == null : this.number.equals(body.number)) &&
+        (this.reference == null ? body.reference == null : this.reference.equals(body.reference)) &&
+        (this.status == null ? body.status == null : this.status.equals(body.status)) &&
+        (this.createdAt == null ? body.createdAt == null : this.createdAt.equals(body.createdAt)) &&
+        (this.updatedAt == null ? body.updatedAt == null : this.updatedAt.equals(body.updatedAt)) &&
+        (this.items == null ? body.items == null : this.items.equals(body.items)) &&
+        (this.notes == null ? body.notes == null : this.notes.equals(body.notes)) &&
+        (this.transactions == null ? body.transactions == null : this.transactions.equals(body.transactions)) &&
+        (this.price == null ? body.price == null : this.price.equals(body.price)) &&
+        (this.remaining == null ? body.remaining == null : this.remaining.equals(body.remaining));
   }
 
   @Override
@@ -212,7 +212,7 @@ public class Order {
   @Override
   public String toString()  {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Order {\n");
+    sb.append("class Body {\n");
     
     sb.append("  id: ").append(id).append("\n");
     sb.append("  number: ").append(number).append("\n");

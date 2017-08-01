@@ -12,22 +12,19 @@
 
 package io.swagger.client.model;
 
-import io.swagger.client.model.OrdersPaymentProductSub;
 import io.swagger.annotations.*;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Informações sobre o produto de pagamento utilizado.
+ * Produto secundário.
  **/
-@ApiModel(description = "Informações sobre o produto de pagamento utilizado.")
-public class PaymentProduct {
+@ApiModel(description = "Produto secundário.")
+public class OrdersPaymentProductSub {
   
   @SerializedName("number")
   private Integer number = null;
   @SerializedName("name")
   private String name = null;
-  @SerializedName("sub")
-  private OrdersPaymentProductSub sub = null;
 
   /**
    * Identificação numérica do produto primário da Cielo.
@@ -51,16 +48,6 @@ public class PaymentProduct {
     this.name = name;
   }
 
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  public OrdersPaymentProductSub getSub() {
-    return sub;
-  }
-  public void setSub(OrdersPaymentProductSub sub) {
-    this.sub = sub;
-  }
-
 
   @Override
   public boolean equals(Object o) {
@@ -70,10 +57,9 @@ public class PaymentProduct {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PaymentProduct paymentProduct = (PaymentProduct) o;
-    return (this.number == null ? paymentProduct.number == null : this.number.equals(paymentProduct.number)) &&
-        (this.name == null ? paymentProduct.name == null : this.name.equals(paymentProduct.name)) &&
-        (this.sub == null ? paymentProduct.sub == null : this.sub.equals(paymentProduct.sub));
+    OrdersPaymentProductSub ordersPaymentProductSub = (OrdersPaymentProductSub) o;
+    return (this.number == null ? ordersPaymentProductSub.number == null : this.number.equals(ordersPaymentProductSub.number)) &&
+        (this.name == null ? ordersPaymentProductSub.name == null : this.name.equals(ordersPaymentProductSub.name));
   }
 
   @Override
@@ -81,18 +67,16 @@ public class PaymentProduct {
     int result = 17;
     result = 31 * result + (this.number == null ? 0: this.number.hashCode());
     result = 31 * result + (this.name == null ? 0: this.name.hashCode());
-    result = 31 * result + (this.sub == null ? 0: this.sub.hashCode());
     return result;
   }
 
   @Override
   public String toString()  {
     StringBuilder sb = new StringBuilder();
-    sb.append("class PaymentProduct {\n");
+    sb.append("class OrdersPaymentProductSub {\n");
     
     sb.append("  number: ").append(number).append("\n");
     sb.append("  name: ").append(name).append("\n");
-    sb.append("  sub: ").append(sub).append("\n");
     sb.append("}\n");
     return sb.toString();
   }

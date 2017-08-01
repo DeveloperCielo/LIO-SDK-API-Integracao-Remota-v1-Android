@@ -57,6 +57,18 @@ public class JsonUtil {
   public static Type getListTypeForDeserialization(Class cls) {
     String className = cls.getSimpleName();
     
+    if ("Body".equalsIgnoreCase(className)) {
+      return new TypeToken<List<Body>>(){}.getType();
+    }
+    
+    if ("Body1".equalsIgnoreCase(className)) {
+      return new TypeToken<List<Body1>>(){}.getType();
+    }
+    
+    if ("Body2".equalsIgnoreCase(className)) {
+      return new TypeToken<List<Body2>>(){}.getType();
+    }
+    
     if ("Card".equalsIgnoreCase(className)) {
       return new TypeToken<List<Card>>(){}.getType();
     }
@@ -65,12 +77,44 @@ public class JsonUtil {
       return new TypeToken<List<ErrorResponse>>(){}.getType();
     }
     
+    if ("InlineResponse200".equalsIgnoreCase(className)) {
+      return new TypeToken<List<InlineResponse200>>(){}.getType();
+    }
+    
+    if ("InlineResponse201".equalsIgnoreCase(className)) {
+      return new TypeToken<List<InlineResponse201>>(){}.getType();
+    }
+    
+    if ("InlineResponse401".equalsIgnoreCase(className)) {
+      return new TypeToken<List<InlineResponse401>>(){}.getType();
+    }
+    
     if ("Order".equalsIgnoreCase(className)) {
       return new TypeToken<List<Order>>(){}.getType();
     }
     
     if ("OrderItem".equalsIgnoreCase(className)) {
       return new TypeToken<List<OrderItem>>(){}.getType();
+    }
+    
+    if ("OrdersCard".equalsIgnoreCase(className)) {
+      return new TypeToken<List<OrdersCard>>(){}.getType();
+    }
+    
+    if ("OrdersItems".equalsIgnoreCase(className)) {
+      return new TypeToken<List<OrdersItems>>(){}.getType();
+    }
+    
+    if ("OrdersPaymentProduct".equalsIgnoreCase(className)) {
+      return new TypeToken<List<OrdersPaymentProduct>>(){}.getType();
+    }
+    
+    if ("OrdersPaymentProductSub".equalsIgnoreCase(className)) {
+      return new TypeToken<List<OrdersPaymentProductSub>>(){}.getType();
+    }
+    
+    if ("OrdersTransactions".equalsIgnoreCase(className)) {
+      return new TypeToken<List<OrdersTransactions>>(){}.getType();
     }
     
     if ("PaymentProduct".equalsIgnoreCase(className)) {
@@ -95,6 +139,18 @@ public class JsonUtil {
   public static Type getTypeForDeserialization(Class cls) {
     String className = cls.getSimpleName();
     
+    if ("Body".equalsIgnoreCase(className)) {
+      return new TypeToken<Body>(){}.getType();
+    }
+    
+    if ("Body1".equalsIgnoreCase(className)) {
+      return new TypeToken<Body1>(){}.getType();
+    }
+    
+    if ("Body2".equalsIgnoreCase(className)) {
+      return new TypeToken<Body2>(){}.getType();
+    }
+    
     if ("Card".equalsIgnoreCase(className)) {
       return new TypeToken<Card>(){}.getType();
     }
@@ -103,12 +159,44 @@ public class JsonUtil {
       return new TypeToken<ErrorResponse>(){}.getType();
     }
     
+    if ("InlineResponse200".equalsIgnoreCase(className)) {
+      return new TypeToken<InlineResponse200>(){}.getType();
+    }
+    
+    if ("InlineResponse201".equalsIgnoreCase(className)) {
+      return new TypeToken<InlineResponse201>(){}.getType();
+    }
+    
+    if ("InlineResponse401".equalsIgnoreCase(className)) {
+      return new TypeToken<InlineResponse401>(){}.getType();
+    }
+    
     if ("Order".equalsIgnoreCase(className)) {
       return new TypeToken<Order>(){}.getType();
     }
     
     if ("OrderItem".equalsIgnoreCase(className)) {
       return new TypeToken<OrderItem>(){}.getType();
+    }
+    
+    if ("OrdersCard".equalsIgnoreCase(className)) {
+      return new TypeToken<OrdersCard>(){}.getType();
+    }
+    
+    if ("OrdersItems".equalsIgnoreCase(className)) {
+      return new TypeToken<OrdersItems>(){}.getType();
+    }
+    
+    if ("OrdersPaymentProduct".equalsIgnoreCase(className)) {
+      return new TypeToken<OrdersPaymentProduct>(){}.getType();
+    }
+    
+    if ("OrdersPaymentProductSub".equalsIgnoreCase(className)) {
+      return new TypeToken<OrdersPaymentProductSub>(){}.getType();
+    }
+    
+    if ("OrdersTransactions".equalsIgnoreCase(className)) {
+      return new TypeToken<OrdersTransactions>(){}.getType();
     }
     
     if ("PaymentProduct".equalsIgnoreCase(className)) {

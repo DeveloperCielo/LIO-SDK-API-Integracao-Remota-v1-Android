@@ -19,7 +19,7 @@ import io.swagger.annotations.*;
 import com.google.gson.annotations.SerializedName;
 
 @ApiModel(description = "")
-public class Transaction {
+public class OrdersTransactions {
   
   @SerializedName("id")
   private String id = null;
@@ -191,19 +191,19 @@ public class Transaction {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Transaction transaction = (Transaction) o;
-    return (this.id == null ? transaction.id == null : this.id.equals(transaction.id)) &&
-        (this.transactionType == null ? transaction.transactionType == null : this.transactionType.equals(transaction.transactionType)) &&
-        (this.status == null ? transaction.status == null : this.status.equals(transaction.status)) &&
-        (this.description == null ? transaction.description == null : this.description.equals(transaction.description)) &&
-        (this.terminalNumber == null ? transaction.terminalNumber == null : this.terminalNumber.equals(transaction.terminalNumber)) &&
-        (this.card == null ? transaction.card == null : this.card.equals(transaction.card)) &&
-        (this.number == null ? transaction.number == null : this.number.equals(transaction.number)) &&
-        (this.authorizationCode == null ? transaction.authorizationCode == null : this.authorizationCode.equals(transaction.authorizationCode)) &&
-        (this.paymentProduct == null ? transaction.paymentProduct == null : this.paymentProduct.equals(transaction.paymentProduct)) &&
-        (this.amount == null ? transaction.amount == null : this.amount.equals(transaction.amount)) &&
-        (this.createdAt == null ? transaction.createdAt == null : this.createdAt.equals(transaction.createdAt)) &&
-        (this.updatedAt == null ? transaction.updatedAt == null : this.updatedAt.equals(transaction.updatedAt));
+    OrdersTransactions ordersTransactions = (OrdersTransactions) o;
+    return (this.id == null ? ordersTransactions.id == null : this.id.equals(ordersTransactions.id)) &&
+        (this.transactionType == null ? ordersTransactions.transactionType == null : this.transactionType.equals(ordersTransactions.transactionType)) &&
+        (this.status == null ? ordersTransactions.status == null : this.status.equals(ordersTransactions.status)) &&
+        (this.description == null ? ordersTransactions.description == null : this.description.equals(ordersTransactions.description)) &&
+        (this.terminalNumber == null ? ordersTransactions.terminalNumber == null : this.terminalNumber.equals(ordersTransactions.terminalNumber)) &&
+        (this.card == null ? ordersTransactions.card == null : this.card.equals(ordersTransactions.card)) &&
+        (this.number == null ? ordersTransactions.number == null : this.number.equals(ordersTransactions.number)) &&
+        (this.authorizationCode == null ? ordersTransactions.authorizationCode == null : this.authorizationCode.equals(ordersTransactions.authorizationCode)) &&
+        (this.paymentProduct == null ? ordersTransactions.paymentProduct == null : this.paymentProduct.equals(ordersTransactions.paymentProduct)) &&
+        (this.amount == null ? ordersTransactions.amount == null : this.amount.equals(ordersTransactions.amount)) &&
+        (this.createdAt == null ? ordersTransactions.createdAt == null : this.createdAt.equals(ordersTransactions.createdAt)) &&
+        (this.updatedAt == null ? ordersTransactions.updatedAt == null : this.updatedAt.equals(ordersTransactions.updatedAt));
   }
 
   @Override
@@ -227,7 +227,7 @@ public class Transaction {
   @Override
   public String toString()  {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Transaction {\n");
+    sb.append("class OrdersTransactions {\n");
     
     sb.append("  id: ").append(id).append("\n");
     sb.append("  transactionType: ").append(transactionType).append("\n");

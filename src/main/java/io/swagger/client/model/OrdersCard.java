@@ -19,7 +19,7 @@ import com.google.gson.annotations.SerializedName;
  * Informações sobre o cartão utilizado na transação.
  **/
 @ApiModel(description = "Informações sobre o cartão utilizado na transação.")
-public class Card {
+public class OrdersCard {
   
   public enum BrandEnum {
      VISA,  MASTERCARD,  ELO,  DINERS,  AMEX,  AURA, 
@@ -73,10 +73,10 @@ public class Card {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Card card = (Card) o;
-    return (this.brand == null ? card.brand == null : this.brand.equals(card.brand)) &&
-        (this.bin == null ? card.bin == null : this.bin.equals(card.bin)) &&
-        (this.last == null ? card.last == null : this.last.equals(card.last));
+    OrdersCard ordersCard = (OrdersCard) o;
+    return (this.brand == null ? ordersCard.brand == null : this.brand.equals(ordersCard.brand)) &&
+        (this.bin == null ? ordersCard.bin == null : this.bin.equals(ordersCard.bin)) &&
+        (this.last == null ? ordersCard.last == null : this.last.equals(ordersCard.last));
   }
 
   @Override
@@ -91,7 +91,7 @@ public class Card {
   @Override
   public String toString()  {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Card {\n");
+    sb.append("class OrdersCard {\n");
     
     sb.append("  brand: ").append(brand).append("\n");
     sb.append("  bin: ").append(bin).append("\n");

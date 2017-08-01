@@ -20,7 +20,7 @@ import com.google.gson.annotations.SerializedName;
  * Informações sobre o produto de pagamento utilizado.
  **/
 @ApiModel(description = "Informações sobre o produto de pagamento utilizado.")
-public class PaymentProduct {
+public class OrdersPaymentProduct {
   
   @SerializedName("number")
   private Integer number = null;
@@ -70,10 +70,10 @@ public class PaymentProduct {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PaymentProduct paymentProduct = (PaymentProduct) o;
-    return (this.number == null ? paymentProduct.number == null : this.number.equals(paymentProduct.number)) &&
-        (this.name == null ? paymentProduct.name == null : this.name.equals(paymentProduct.name)) &&
-        (this.sub == null ? paymentProduct.sub == null : this.sub.equals(paymentProduct.sub));
+    OrdersPaymentProduct ordersPaymentProduct = (OrdersPaymentProduct) o;
+    return (this.number == null ? ordersPaymentProduct.number == null : this.number.equals(ordersPaymentProduct.number)) &&
+        (this.name == null ? ordersPaymentProduct.name == null : this.name.equals(ordersPaymentProduct.name)) &&
+        (this.sub == null ? ordersPaymentProduct.sub == null : this.sub.equals(ordersPaymentProduct.sub));
   }
 
   @Override
@@ -88,7 +88,7 @@ public class PaymentProduct {
   @Override
   public String toString()  {
     StringBuilder sb = new StringBuilder();
-    sb.append("class PaymentProduct {\n");
+    sb.append("class OrdersPaymentProduct {\n");
     
     sb.append("  number: ").append(number).append("\n");
     sb.append("  name: ").append(name).append("\n");
