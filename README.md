@@ -1,4 +1,4 @@
-# swagger-android-client
+# swagger-android-client - DEPRECATED
 
 ## Requirements
 
